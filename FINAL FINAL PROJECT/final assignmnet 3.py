@@ -192,7 +192,7 @@ class EventManagementApp(tk.Tk):
             messagebox.showerror("Error", "Invalid ID. Please enter a numeric ID.")
 
     def display_employee_details(self, employee):
-        # Assuming you want to display details below or in another widget
+       
         detail_frame = ttk.Frame(self.employee_frame)
         detail_frame.pack(fill=tk.BOTH, expand=True, pady=10)
         ttk.Label(detail_frame, text=f"Name: {employee.name}").pack()
@@ -424,7 +424,7 @@ class EventManagementApp(tk.Tk):
 
         try:
             new_client = Client(self.client_id_counter, name, address, contact_details, float(budget))
-            new_client.add_event(event_type)  # Assuming event_type is properly received
+            new_client.add_event(event_type)  # event_type is properly received
             self.clients[self.client_id_counter] = new_client
             self.client_id_counter += 1
             self.save_data('../final assignmnet /clients.pkl', self.clients)
@@ -632,11 +632,11 @@ class EventManagementApp(tk.Tk):
             return
 
         # Create or update the Supplier object
-        supplier_id = self.get_next_supplier_id()  # Assuming a method to generate unique IDs or handle existing ones
+        supplier_id = self.get_next_supplier_id()  #  a method to generate unique IDs or handle existing ones
         new_supplier = Supplier(supplier_id, name, address, contact_details, [event_type], min_guests, max_guests)
 
         # Save or update the supplier in a collection
-        self.suppliers[supplier_id] = new_supplier  # Assuming self.suppliers is a dictionary
+        self.suppliers[supplier_id] = new_supplier  # self.suppliers is a dictionary
 
         # Save to file or database if needed
         # self.save_to_database(new_supplier)  # This is an example placeholder
@@ -692,7 +692,7 @@ class EventManagementApp(tk.Tk):
 
     # Example of loading data with checks or defaults
     def load_suppliers(self):
-        # assuming data is a dictionary loaded from a file
+        # dictionary loaded from a file
         for data in loaded_data:
             supplier = Supplier(
                 supplier_id=data.get('supplier_id'),
@@ -707,7 +707,7 @@ class EventManagementApp(tk.Tk):
             self.suppliers[supplier.supplier_id] = supplier
 
     def create_widgets(self):
-        # Assuming you have a frame or some container for the Treeview
+        # frame  for the Treeview
         self.supplier_table_frame = ttk.Frame(self.master)
         self.supplier_table_frame.pack(fill='both', expand=True)
 
@@ -747,7 +747,7 @@ class EventManagementApp(tk.Tk):
 
             print(
                 f"Supplier {supplier_id} loaded with event_type={supplier.event_type}, min_guests={supplier.min_guests}, max_guests={supplier.max_guests}")
-            # Assuming event_type is properly initialized
+            
             event_type_name = ', '.join([et.name for et in supplier.event_type]) if isinstance(supplier.event_type,
                                                                                                list) else supplier.event_type.name
             self.supplier_table.insert('', 'end', iid=supplier_id,
@@ -830,9 +830,9 @@ class EventManagementApp(tk.Tk):
         form_frame = ttk.Frame(self)
         form_frame.pack(padx=10, pady=10, fill=tk.X, expand=True)
 
-        # Assuming EventType is an enum or list of event types
+        # EventType is an enum or list of event types
         event_type_combobox = ttk.Combobox(form_frame, values=[e.name for e in EventType], state="readonly")
-        event_type_combobox.set(supplier.event_type)  # Assuming supplier.event_type is the correct format
+        event_type_combobox.set(supplier.event_type)  
 
         name_entry = ttk.Entry(form_frame)
         name_entry.insert(0, supplier.name)
@@ -1224,7 +1224,7 @@ class EventManagementApp(tk.Tk):
         client_name = self.client_name_entry.get()
         venue = self.venue_entry.get()
 
-        # You would typically validate the input here
+
 
         # Generate a new unique event ID
         event_id = str(self.event_id_counter)
@@ -1421,13 +1421,11 @@ class EventManagementApp(tk.Tk):
 
         # Generate a new unique venue ID by incrementing the last ID used
         venue_id = str(self.venue_id_counter)
-        # ... code to add the venue ...
         self.venue_id_counter += 1
 
         # Ensure the order of these values matches the columns in the Treeview
         venue_details = (venue_name, venue_address, venue_contact, venue_min_guests, venue_max_guests)
 
-        # Assuming you have a Venue class that correctly assigns these values
         new_venue = Venue(venue_id, *venue_details)
 
         # Add the new venue to the venues dictionary, using venue_id as a string
@@ -1457,7 +1455,7 @@ class EventManagementApp(tk.Tk):
         selected_items = self.venue_list.selection()
         if selected_items:  # Ensure there is at least one selected item
             selected_item = selected_items[0]
-            return self.venue_list.item(selected_item, 'values')[0]  # Assuming the ID is stored in the first column
+            return self.venue_list.item(selected_item, 'values')[0]  
         return None
 
     def search_venue_by_id(self):
@@ -1528,7 +1526,7 @@ class EventManagementApp(tk.Tk):
         modify_window = tk.Toplevel(self)
         modify_window.title("Modify Venue")
 
-        # Display the venue ID as a reference, but do not allow it to be changed
+        # Display the venue ID as a reference
         ttk.Label(modify_window, text=f"Venue ID: {venue_id}").grid(row=0, column=0, sticky=tk.W)
 
         # Add entry widgets and labels for venue details
@@ -1581,7 +1579,7 @@ class EventManagementApp(tk.Tk):
         self.venue_list.item(venue_id, values=(venue.name, venue.address,
                                                venue.contact, venue.min_guests, venue.max_guests))
 
-        # Save changes to the pickle file; the key, which is the venue ID, remains unchanged
+        # Save changes to the pickle file the key, which is the venue ID, remains unchanged
         with open('../final assignmnet /venues.pkl', 'wb') as outfile:
             pickle.dump(self.venues, outfile, pickle.HIGHEST_PROTOCOL)
 
@@ -1603,7 +1601,7 @@ class EventManagementApp(tk.Tk):
         self.venue_list.delete(*self.venue_list.get_children())
         # Insert new entries into the Treeview
         for venue_id, venue in self.venues.items():
-            # Access attributes directly if 'venue' is an instance of a class
+            # Access attributes directly if venue is an instance of a class
             venue_details = (
                 venue_id,
                 venue.name,  # Accessing name attribute
@@ -1615,7 +1613,6 @@ class EventManagementApp(tk.Tk):
             self.venue_list.insert("", 'end', iid=venue_id, values=venue_details)
 
     def clear_venue_entries(self):
-        # Assuming you have entry fields named 'venue_name_entry', 'venue_address_entry', etc.
         self.venue_name_entry.delete(0, 'end')
         self.venue_address_entry.delete(0, 'end')
         self.venue_contact_entry.delete(0, 'end')
